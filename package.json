@@ -1,0 +1,29 @@
+{
+  "name": "hourly-recruitment-app-backend",
+  "version": "1.0.0",
+  "description": "Backend for hourly recruitment app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hardikarora24/hourly-recruitment-app-backend.git"
+  },
+  "author": "Hardik Arora",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hardikarora24/hourly-recruitment-app-backend/issues"
+  },
+  "homepage": "https://github.com/hardikarora24/hourly-recruitment-app-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
