@@ -7,7 +7,8 @@ const USER_TYPES = {
 }
 
 const UserSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
   type: {
     type: String,
     enum: [USER_TYPES.admin, USER_TYPES.client, USER_TYPES.freelancer],
