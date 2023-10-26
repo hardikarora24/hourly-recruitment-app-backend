@@ -1,4 +1,4 @@
-import { USER_TYPES } from '../Schema/User.js'
+import { USER_TYPES } from '../schema/User.js'
 
 const privateRoute = (req, res, next) => {
   if (!req.user || !req.user._id) {
@@ -11,7 +11,7 @@ const privateRoute = (req, res, next) => {
 }
 
 const adminRoute = (req, res, next) => {
-  if (req.user.type === USER_TYPES.admin) {
+  if (req.user?.type === USER_TYPES.admin) {
     next()
   } else {
     return res
@@ -21,7 +21,7 @@ const adminRoute = (req, res, next) => {
 }
 
 const clientRoute = (req, res, next) => {
-  if (req.user.type === USER_TYPES.client) {
+  if (req.user?.type === USER_TYPES.client) {
     next()
   } else {
     return res
@@ -31,7 +31,7 @@ const clientRoute = (req, res, next) => {
 }
 
 const freelancerRoute = (req, res, next) => {
-  if (req.user.type === USER_TYPES.freelancer) {
+  if (req.user?.type === USER_TYPES.freelancer) {
     next()
   } else {
     return res

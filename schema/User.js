@@ -6,7 +6,7 @@ const USER_TYPES = {
   freelancer: 'Freelancer',
 }
 
-const UserSchema = new mongoose.Schema({
+const Userschema = new mongoose.Schema({
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
   type: {
@@ -19,6 +19,6 @@ const UserSchema = new mongoose.Schema({
   createdAt: { type: Date, required: true },
 })
 
-const User = mongoose.model('User', UserSchema)
+const User = mongoose.model('User', Userschema)
 
 export { User, USER_TYPES }

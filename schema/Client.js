@@ -1,11 +1,11 @@
 import mongoose from 'mongoose'
-import { ProjectSchema } from './Project.js'
+import { Projectschema } from './Project.js'
 
-const ClientSchema = new mongoose.Schema({
+const Clientschema = new mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, required: true },
-  projects: { type: [ProjectSchema], required: true },
+  projects: { type: [Projectschema], required: true },
 })
 
-const Client = mongoose.model('Client', ClientSchema)
+const Client = mongoose.model('Client', Clientschema)
 
 export { Client }

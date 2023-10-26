@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { BidSchema } from './Bid.js'
+import { Bidschema } from './Bid.js'
 
 const PROJECT_STATUS = {
   posted: 'Posted',
@@ -8,10 +8,11 @@ const PROJECT_STATUS = {
   approved: 'Approved',
 }
 
-const ProjectSchema = new mongoose.Schema({
+const Projectschema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   technologies: { type: [String], required: true },
+  clientId: { type: mongoose.Schema.Types.ObjectId, required: true },
   duration: { type: Number, required: true },
   status: {
     type: [
@@ -23,10 +24,9 @@ const ProjectSchema = new mongoose.Schema({
     required: true,
     default: PROJECT_STATUS.posted,
   },
-  bids: { type: [BidSchema], required: true },
-  accepted_bid: { type: BidSchema, required: true, default: null },
+  accepted_bid: { type: Bidschema, required: false, default: null },
 })
 
-const Project = mongoose.model('Project', ProjectSchema)
+const Project = mongoose.model('Project', Projectschema)
 
-export { Project, PROJECT_STATUS, ProjectSchema }
+export { Project, PROJECT_STATUS, Projectschema }

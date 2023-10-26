@@ -1,8 +1,8 @@
 import passport from 'passport'
 import bcrypt from 'bcryptjs'
-import { USER_TYPES, User } from '../Schema/User.js'
-import { Client } from '../Schema/Client.js'
-import { Freelancer } from '../Schema/Freelancer.js'
+import { USER_TYPES, User } from '../schema/User.js'
+import { Client } from '../schema/Client.js'
+import { Freelancer } from '../schema/Freelancer.js'
 import connection from '../config/MongooseConfig.js'
 
 const loginUser = (req, res, next) => {
@@ -65,7 +65,8 @@ const registerUser = async (req, res) => {
       password: await bcrypt.hash(req.body.password, 10),
       createdAt: Date.now(),
       type: req.body.type,
-      name: req.body.name,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
     }
 
     const newUserWithType =

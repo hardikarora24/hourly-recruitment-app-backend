@@ -1,6 +1,6 @@
-import { User, USER_TYPES } from '../Schema/User.js'
-import { Freelancer } from '../Schema/Freelancer.js'
-import { Client } from '../Schema/Client.js'
+import { User, USER_TYPES } from '../schema/User.js'
+import { Freelancer } from '../schema/Freelancer.js'
+import { Client } from '../schema/Client.js'
 import bcrypt from 'bcryptjs'
 import passport from 'passport'
 import localStrategy from 'passport-local'
@@ -74,7 +74,7 @@ const initPassport = () => {
   )
 
   passport.serializeUser((user, done) => {
-    done(null, user.id)
+    done(null, user._id)
   })
 
   passport.deserializeUser((id, done) => {
