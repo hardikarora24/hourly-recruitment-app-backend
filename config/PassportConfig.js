@@ -1,6 +1,4 @@
-import { User, USER_TYPES } from '../schema/User.js'
-import { Freelancer } from '../schema/Freelancer.js'
-import { Client } from '../schema/Client.js'
+import { User } from '../schema/User.js'
 import bcrypt from 'bcryptjs'
 import passport from 'passport'
 import localStrategy from 'passport-local'

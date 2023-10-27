@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { Bidschema } from './Bid.js'
+import { SubmissionSchema } from './Submission.js'
 
 const PROJECT_STATUS = {
   posted: 'Posted',
@@ -15,7 +16,8 @@ const Projectschema = new mongoose.Schema({
   clientId: { type: mongoose.Schema.Types.ObjectId, required: true },
   duration: { type: Number, required: true },
   status: {
-    type: [
+    type: String,
+    enum: [
       PROJECT_STATUS.approved,
       PROJECT_STATUS.completed,
       PROJECT_STATUS.inProgress,
@@ -24,7 +26,14 @@ const Projectschema = new mongoose.Schema({
     required: true,
     default: PROJECT_STATUS.posted,
   },
+  freelancerId: { type: mongoose.Schema.Types.ObjectId, required: false },
   accepted_bid: { type: Bidschema, required: false, default: null },
+  approved_submission: {
+    type: SubmissionSchema,
+    required: false,
+    default: null,
+  },
+  submission_url: { type: String, required: false },
 })
 
 const Project = mongoose.model('Project', Projectschema)
