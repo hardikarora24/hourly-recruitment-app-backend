@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Master - Admins
+  body 
+    ul 
+      each admin in admins
+        li 
+          span= admin.username
+          button(onclick="handleDelete('" + admin.id + "', '" + masterUsername + "', '" + masterPassword + "')") Delete
+    script.
+      const handleDelete = async (id, masterUsername, masterPassword) => {
+
+        const response = await fetch('./delete-admin', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id,
+            masterUsername: masterUsername,
+            masterPassword: masterPassword
+          })
+        })
+
+        const data = await response.json()
+        location.reload()
+      }

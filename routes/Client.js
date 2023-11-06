@@ -3,7 +3,7 @@ import { PROJECT_STATUS, Project } from '../schema/Project.js'
 import { Bid } from '../schema/Bid.js'
 
 import express from 'express'
-import { Submission } from '../schema/Submission.js'
+import { SUBMISSION_STATUS, Submission } from '../schema/Submission.js'
 
 const ClientRouter = express.Router()
 
@@ -48,11 +48,10 @@ ClientRouter.post('/add-project', async (req, res) => {
 })
 
 ClientRouter.get('/bids', async (req, res) => {
-  const id = req.user._id
   const { projectId } = req.query
 
   try {
-    const bids = await Bid.find({ clientId: id, projectId: projectId })
+    const bids = await Bid.find({ projectId: projectId })
 
     if (!bids) {
       throw new Error('Could not get bids from DB')
@@ -137,7 +136,7 @@ ClientRouter.post('/approve', async (req, res) => {
     session.startTransaction()
     const s = await Submission.findOneAndUpdate(
       { _id: submission._id },
-      { accepted_at: Date.now() },
+      { accepted_at: Date.now(), status: SUBMISSION_STATUS.approved },
       { session, new: true }
     )
     const project = await Project.findOneAndUpdate(
@@ -158,6 +157,69 @@ ClientRouter.post('/approve', async (req, res) => {
     return res
       .status(503)
       .json({ success: false, message: 'Could not approve submission' })
+  }
+})
+
+ClientRouter.post('/reject', async (req, res) => {
+  const session = await connection.startSession()
+  try {
+    const { projectId, submission } = req.body
+
+    session.startTransaction()
+    const s = await Submission.findOneAndUpdate(
+      { _id: submission._id },
+      { accepted_at: Date.now(), status: SUBMISSION_STATUS.rejected },
+      { session, new: true }
+    )
+    const project = await Project.findOneAndUpdate(
+      { _id: projectId },
+      {
+        status: PROJECT_STATUS.inProgress,
+      },
+      { session, new: true }
+    )
+
+    await session.commitTransaction()
+    await session.endSession()
+
+    return res.status(201).json({ success: true })
+  } catch (e) {
+    console.log(e)
+    return res
+      .status(503)
+      .json({ success: false, message: 'Could not approve submission' })
+  }
+})
+
+ClientRouter.post('/edit', async (req, res) => {
+  const p = req.body.project
+
+  try {
+    if (p.status !== PROJECT_STATUS.posted) {
+      return res
+        .status(401)
+        .json({ success: false, message: 'Cannot edit this post' })
+    }
+
+    await Project.findOneAndUpdate({ _id: p._id }, p)
+
+    return res.status(201).json({ success: true, project: p })
+  } catch (e) {
+    console.log(e)
+    res.status(503).json({ success: false, message: 'Could not edit' })
+  }
+})
+
+ClientRouter.post('/delete', async (req, res) => {
+  const id = req.body.project_id
+
+  try {
+    await Project.findOneAndDelete({ _id: id })
+
+    return res.status(204).json({ success: true })
+  } catch (e) {
+    console.log(e)
+    res.status(503).json({ success: false, message: 'Could not delete' })
   }
 })
 

@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Master - Home
+  body 
+    form(action="./add-admin", method="POST")
+      input(type="text", hidden, name="masterUsername", value=masterUsername)
+      input(type="password", hidden, name="masterPassword", value=masterPassword)
+      input(type="submit", value="Add new admin")
+
+    form(action="./view-admins", method="POST")
+      input(type="text", hidden, name="masterUsername", value=masterUsername)
+      input(type="password", hidden, name="masterPassword", value=masterPassword)
+      input(type="submit", value="View all admins")

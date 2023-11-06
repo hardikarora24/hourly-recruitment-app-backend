@@ -46,6 +46,19 @@ FreelancerRouter.post('/bid', async (req, res) => {
   }
 })
 
+FreelancerRouter.post('/delete-bid', async (req, res) => {
+  try {
+    await Bid.findOneAndDelete({ _id: req.body.id })
+
+    return res.status(204).json({ success: true })
+  } catch (e) {
+    console.log(e)
+    return res
+      .status(503)
+      .json({ success: false, message: 'Could not delete bid' })
+  }
+})
+
 FreelancerRouter.post('/submit', async (req, res) => {
   const session = await connection.startSession()
   try {
@@ -88,8 +101,6 @@ FreelancerRouter.get('/earnings', async (req, res) => {
       status: PROJECT_STATUS.approved,
     })
 
-    console.log(projects)
-
     const earnings = projects.reduce((total, p) => {
       return (
         total +
@@ -107,6 +118,43 @@ FreelancerRouter.get('/earnings', async (req, res) => {
     return res
       .status(503)
       .json({ success: false, message: 'Could  not get total earnings' })
+  }
+})
+
+FreelancerRouter.post('/delete', async (req, res) => {
+  const id = req.body.bid_id
+
+  try {
+    await Bid.findOneAndDelete({ _id: id })
+
+    return res.status(204).json({ success: true })
+  } catch (e) {
+    console.log(e)
+    res.status(503).json({ success: false, message: 'Could not delete' })
+  }
+})
+
+FreelancerRouter.get('/bids', async (req, res) => {
+  const { projectId } = req.query
+
+  try {
+    const bids = await Bid.find({ projectId: projectId })
+
+    if (!bids) {
+      throw new Error('Could not get bids from DB')
+    }
+
+    if (bids.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'No bids for this project' })
+    }
+
+    return res.status(200).json({ success: true, bids })
+  } catch (err) {
+    return res
+      .status(503)
+      .json({ success: false, message: 'Could not get bids' })
   }
 })
 

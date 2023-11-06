@@ -1,5 +1,5 @@
 import express from 'express'
 
-const AdmiRouter = express.Router()
+const AdminRouter = express.Router()
 
-export default AdmiRouter
+export default AdminRouter

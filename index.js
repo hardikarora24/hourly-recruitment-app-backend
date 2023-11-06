@@ -10,6 +10,15 @@ import session from 'express-session'
 import passport from 'passport'
 
 import {
+  masterLogin,
+  masterHome,
+  createAdmin,
+  checkCredentialMW,
+  addAdmin,
+  viewAdmins,
+  deleteAdmin,
+} from './routes/Static.js'
+import {
   loginUser,
   logout,
   returnUser,
@@ -43,6 +52,9 @@ app.use(cors(options))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+app.set('view engine', 'pug')
+app.set('views', './views')
+
 // Session
 app.use(cookieParser(process.env.SESSION_SECRET))
 app.use(
@@ -70,15 +82,18 @@ app.post('/register', registerUser)
 app.get('/user', returnUser)
 app.get('/logout', logout)
 
+// Static Routes
+app.get('/', masterLogin)
+app.post('/home', checkCredentialMW, masterHome)
+app.post('/view-admins', checkCredentialMW, viewAdmins)
+app.post('/add-admin', checkCredentialMW, addAdmin)
+app.post('/create-admin', checkCredentialMW, createAdmin)
+app.post('/delete-admin', checkCredentialMW, deleteAdmin)
+
 // Routes
 app.use('/client', privateRoute, clientRoute, ClientRouter)
 app.use('/freelancer', privateRoute, freelancerRoute, FreelancerRouter)
 app.use('/admin', privateRoute, adminRoute, AdminRouter)
-
-// Test Route
-app.get('/', (req, res) => {
-  res.send('hello world')
-})
 
 // Start server
 server.listen(PORT, () => {
