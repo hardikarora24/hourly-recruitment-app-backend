@@ -42,6 +42,7 @@ const registerUser = async (req, res) => {
       type: req.body.type,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
+      skills: req.body.skills,
     })
 
     newUser.save()
