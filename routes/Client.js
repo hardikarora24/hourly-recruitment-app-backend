@@ -4,6 +4,7 @@ import { Bid } from '../schema/Bid.js'
 
 import express from 'express'
 import { SUBMISSION_STATUS, Submission } from '../schema/Submission.js'
+import { User } from '../schema/User.js'
 
 const ClientRouter = express.Router()
 
@@ -220,6 +221,29 @@ ClientRouter.post('/delete', async (req, res) => {
   } catch (e) {
     console.log(e)
     res.status(503).json({ success: false, message: 'Could not delete' })
+  }
+})
+
+ClientRouter.get('/freelancer', async (req, res) => {
+  const { id } = req.query
+
+  try {
+    const freelancer = await User.findOne({ _id: id })
+    const projects = await Project.find({
+      freelancerId: id,
+      status: PROJECT_STATUS.approved,
+    })
+    console.log(freelancer, projects)
+
+    return res.status(200).json({
+      success: true,
+      freelancer: { ...freelancer._doc, completedProjects: projects.length },
+    })
+  } catch (e) {
+    console.log(e)
+    res
+      .status(503)
+      .json({ success: false, message: 'Could not get freelancer' })
   }
 })
 
