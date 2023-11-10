@@ -4,6 +4,7 @@ import { Bid } from '../schema/Bid.js'
 import { Submission } from '../schema/Submission.js'
 import connection from '../config/MongooseConfig.js'
 import businessHours from '../utils/businessHours.js'
+import { User } from '../schema/User.js'
 
 const FreelancerRouter = express.Router()
 
@@ -155,6 +156,23 @@ FreelancerRouter.get('/bids', async (req, res) => {
     return res
       .status(503)
       .json({ success: false, message: 'Could not get bids' })
+  }
+})
+
+FreelancerRouter.post('/add-skill', async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.body.id },
+      { $push: { skills: req.body.skill } },
+      { new: true }
+    )
+
+    return res.status(200).json({ success: true, skills: user.skills })
+  } catch (e) {
+    console.log(e)
+    return res
+      .status(503)
+      .json({ success: false, message: 'Could not add skill' })
   }
 })
 

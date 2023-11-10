@@ -25,7 +25,7 @@ const businessHours = (startDate, endDate) => {
     current.setTime(current.getTime() + 1000 * 60)
   }
 
-  return minutesWorked / 60
+  return Math.ceil(minutesWorked / 60)
 }
 
 export default businessHours

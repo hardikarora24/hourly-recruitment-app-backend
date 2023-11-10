@@ -20,7 +20,7 @@ ClientRouter.get('/projects', async (req, res) => {
     if (projects.length === 0) {
       return res
         .status(404)
-        .json({ success: false, message: 'No projects for this client' })
+        .json({ success: true, message: 'No projects for this client' })
     }
 
     return res.status(200).json({ success: true, projects })
@@ -216,7 +216,7 @@ ClientRouter.post('/delete', async (req, res) => {
   try {
     await Project.findOneAndDelete({ _id: id })
 
-    return res.status(204).json({ success: true })
+    return res.status(202).json({ success: true })
   } catch (e) {
     console.log(e)
     res.status(503).json({ success: false, message: 'Could not delete' })
