@@ -233,7 +233,6 @@ ClientRouter.get('/freelancer', async (req, res) => {
       freelancerId: id,
       status: PROJECT_STATUS.approved,
     })
-    console.log(freelancer, projects)
 
     return res.status(200).json({
       success: true,

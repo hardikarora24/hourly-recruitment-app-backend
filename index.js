@@ -33,6 +33,7 @@ import {
 import ClientRouter from './routes/Client.js'
 import FreelancerRouter from './routes/Freelancer.js'
 import AdminRouter from './routes/Admin.js'
+import { Project } from './schema/Project.js'
 
 const PORT = process.env.PORT || 5001
 

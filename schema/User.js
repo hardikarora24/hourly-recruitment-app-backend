@@ -18,6 +18,7 @@ const Userschema = new mongoose.Schema({
   password: { type: String, required: true },
   createdAt: { type: Date, required: true },
   skills: { type: [String], required: true, default: [] },
+  deleted: { type: String, required: false },
 })
 
 const User = mongoose.model('User', Userschema)

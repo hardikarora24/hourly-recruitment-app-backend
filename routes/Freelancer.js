@@ -162,7 +162,7 @@ FreelancerRouter.get('/bids', async (req, res) => {
 FreelancerRouter.post('/add-skill', async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
-      { _id: req.body.id },
+      { _id: req.user._id },
       { $push: { skills: req.body.skill } },
       { new: true }
     )
@@ -173,6 +173,23 @@ FreelancerRouter.post('/add-skill', async (req, res) => {
     return res
       .status(503)
       .json({ success: false, message: 'Could not add skill' })
+  }
+})
+
+FreelancerRouter.post('/delete-skill', async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { skills: req.body.skills },
+      { new: true }
+    )
+
+    return res.status(200).json({ success: true, skills: user.skills })
+  } catch (e) {
+    console.log(e)
+    return res
+      .status(503)
+      .json({ success: false, message: 'Could not delete skill' })
   }
 })
 
