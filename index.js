@@ -36,16 +36,16 @@ import AdminRouter from './routes/Admin.js'
 
 let key, cert
 
-try {
-  key = fs.readFileSync('./key.pem')
-  cert = fs.readFileSync('./cert.pem')
-} catch (e) {
-  console.log('No keys')
-}
+// try {
+//   key = fs.readFileSync('./key.pem')
+//   cert = fs.readFileSync('./cert.pem')
+// } catch (e) {
+//   console.log('No keys')
+// }
 
 const app = express()
-const opts = key ? (cert ? { key, cert } : { key }) : cert ? { cert } : {}
-const server = https.createServer(opts, app)
+// const opts = key ? (cert ? { key, cert } : { key }) : cert ? { cert } : {}
+const server = https.createServer(app)
 
 const allowedOrigins = [process.env.ORIGIN]
 const options = {
