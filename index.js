@@ -6,7 +6,7 @@ import fs from 'fs'
 import cors from 'cors'
 import { initPassport } from './config/PassportConfig.js'
 import cookieParser from 'cookie-parser'
-import session from 'express-session'
+import session from 'cookie-session'
 import passport from 'passport'
 
 import {
