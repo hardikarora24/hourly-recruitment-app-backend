@@ -37,11 +37,18 @@ import { Project } from './schema/Project.js'
 
 const PORT = process.env.PORT || 5001
 
-const key = fs.readFileSync('./key.pem')
-const cert = fs.readFileSync('./cert.pem')
+let key, cert
+
+try {
+  key = fs.readFileSync('./key.pem')
+  cert = fs.readFileSync('./cert.pem')
+} catch (e) {
+  console.log('No keys')
+}
 
 const app = express()
-const server = https.createServer({ key: key, cert: cert }, app)
+const opts = key ? (cert ? { key, cert } : { key }) : cert ? { cert } : {}
+const server = https.createServer(opts, app)
 
 const allowedOrigins = [process.env.ORIGIN]
 const options = {
