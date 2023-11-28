@@ -33,9 +33,6 @@ import {
 import ClientRouter from './routes/Client.js'
 import FreelancerRouter from './routes/Freelancer.js'
 import AdminRouter from './routes/Admin.js'
-import { Project } from './schema/Project.js'
-
-const PORT = process.env.PORT || 5001
 
 let key, cert
 
@@ -103,7 +100,4 @@ app.use('/client', privateRoute, clientRoute, ClientRouter)
 app.use('/freelancer', privateRoute, freelancerRoute, FreelancerRouter)
 app.use('/admin', privateRoute, adminRoute, AdminRouter)
 
-// Start server
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+export default server
