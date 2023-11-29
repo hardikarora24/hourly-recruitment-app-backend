@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
-import https from 'https'
+import http from 'http'
 import cors from 'cors'
 import { initPassport } from './config/PassportConfig.js'
 import cookieParser from 'cookie-parser'
@@ -34,7 +34,7 @@ import FreelancerRouter from './routes/Freelancer.js'
 import AdminRouter from './routes/Admin.js'
 
 const app = express()
-const server = https.createServer(app)
+const server = http.createServer(app)
 
 const allowedOrigins = [process.env.ORIGIN]
 const options = {
