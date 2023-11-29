@@ -4,6 +4,7 @@ import { User } from '../schema/User.js'
 
 const loginUser = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
+    console.log({ body: req.body, user, requser: req.user })
     if (err) {
       console.error(err)
       return res
