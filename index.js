@@ -2,7 +2,6 @@ import dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
 import https from 'https'
-import fs from 'fs'
 import cors from 'cors'
 import { initPassport } from './config/PassportConfig.js'
 import cookieParser from 'cookie-parser'
@@ -34,17 +33,7 @@ import ClientRouter from './routes/Client.js'
 import FreelancerRouter from './routes/Freelancer.js'
 import AdminRouter from './routes/Admin.js'
 
-let key, cert
-
-// try {
-//   key = fs.readFileSync('./key.pem')
-//   cert = fs.readFileSync('./cert.pem')
-// } catch (e) {
-//   console.log('No keys')
-// }
-
 const app = express()
-// const opts = key ? (cert ? { key, cert } : { key }) : cert ? { cert } : {}
 const server = https.createServer(app)
 
 const allowedOrigins = [process.env.ORIGIN]
