@@ -21,6 +21,8 @@ const loginUser = (req, res, next) => {
     req.logIn(user, async (err) => {
       if (err) throw err
 
+      console.log('logged in', user)
+
       res.json({
         success: true,
         user,
