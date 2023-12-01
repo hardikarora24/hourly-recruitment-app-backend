@@ -63,12 +63,27 @@ const logout = (req, res) => {
   })
 }
 
-const returnUser = (req, res) => {
-  if (!req.user) {
-    return res.status(404).json({ success: false, message: 'Not logged in' })
-  }
+const returnUser = async (req, res) => {
+  const { id } = req.query
+  console.log(id)
+  // if (!req.user) {
+  //   return res.status(404).json({ success: false, message: 'Not logged in' })
+  // }
 
-  res.status(200).json({ success: true, user: req.user })
+  try {
+    const user = await User.findOne({ _id: id })
+    console.log(user)
+
+    if (!user) {
+      return res.status(404).json({ success: true, message: 'User not found' })
+    }
+
+    return res.status(200).json({ success: true, user })
+  } catch (e) {
+    return res
+      .status(503)
+      .json({ success: false, message: 'Could not get user' })
+  }
 }
 
 export { loginUser, logout, returnUser, registerUser }
