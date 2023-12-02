@@ -23,12 +23,6 @@ import {
   returnUser,
   registerUser,
 } from './routes/AuthRoutes.js'
-import {
-  adminRoute,
-  clientRoute,
-  freelancerRoute,
-  privateRoute,
-} from './routes/Middleware.js'
 import ClientRouter from './routes/Client.js'
 import FreelancerRouter from './routes/Freelancer.js'
 import AdminRouter from './routes/Admin.js'
@@ -85,8 +79,8 @@ app.post('/create-admin', checkCredentialMW, createAdmin)
 app.post('/delete-admin', checkCredentialMW, deleteAdmin)
 
 // Routes
-app.use('/client', privateRoute, clientRoute, ClientRouter)
-app.use('/freelancer', privateRoute, freelancerRoute, FreelancerRouter)
-app.use('/admin', privateRoute, adminRoute, AdminRouter)
+app.use('/client', ClientRouter)
+app.use('/freelancer', FreelancerRouter)
+app.use('/admin', AdminRouter)
 
 export default server
