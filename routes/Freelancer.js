@@ -11,7 +11,7 @@ const FreelancerRouter = express.Router()
 FreelancerRouter.get('/projects', async (req, res) => {
   try {
     const projects = await Project.find({
-      $or: [{ freelancerId: req.user._id }, { status: PROJECT_STATUS.posted }],
+      $or: [{ freelancerId: req.query._id }, { status: PROJECT_STATUS.posted }],
     })
 
     if (!projects) {
@@ -32,7 +32,7 @@ FreelancerRouter.post('/bid', async (req, res) => {
     const bid = Bid({
       clientId: req.body.clientId,
       projectId: req.body.projectId,
-      freelancerId: req.user._id,
+      freelancerId: req.query.id,
       hourly_rate: req.body.rate,
     })
 
@@ -68,7 +68,7 @@ FreelancerRouter.post('/submit', async (req, res) => {
       [
         {
           ...req.body.submission,
-          freelancerId: req.user._id,
+          freelancerId: req.query._id,
           clientId: req.body.clientId,
         },
       ],
@@ -95,7 +95,7 @@ FreelancerRouter.post('/submit', async (req, res) => {
 
 FreelancerRouter.get('/earnings', async (req, res) => {
   try {
-    const id = req.user._id
+    const id = req.query._id
 
     const projects = await Project.find({
       freelancerId: id,
@@ -162,7 +162,7 @@ FreelancerRouter.get('/bids', async (req, res) => {
 FreelancerRouter.post('/add-skill', async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
-      { _id: req.user._id },
+      { _id: req.body.id },
       { $push: { skills: req.body.skill } },
       { new: true }
     )
@@ -179,7 +179,7 @@ FreelancerRouter.post('/add-skill', async (req, res) => {
 FreelancerRouter.post('/delete-skill', async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
-      { _id: req.user._id },
+      { _id: req.body.id },
       { skills: req.body.skills },
       { new: true }
     )

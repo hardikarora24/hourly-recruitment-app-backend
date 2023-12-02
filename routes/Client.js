@@ -9,7 +9,7 @@ import { User } from '../schema/User.js'
 const ClientRouter = express.Router()
 
 ClientRouter.get('/projects', async (req, res) => {
-  const id = req.user._id
+  const id = req.query.id
 
   try {
     const projects = await Project.find({ clientId: id })
@@ -36,7 +36,7 @@ ClientRouter.post('/add-project', async (req, res) => {
   try {
     const newProject = Project({
       ...req.body.project,
-      clientId: req.user._id.toString(),
+      clientId: req.body.id.toString(),
     })
 
     const savedProject = await newProject.save()
@@ -106,7 +106,7 @@ ClientRouter.post('/accept-bid', async (req, res) => {
 })
 
 ClientRouter.get('/submissions', async (req, res) => {
-  const id = req.user._id
+  const id = req.query.id
 
   try {
     const submissions = await Submission.find({ clientId: id })
