@@ -100,13 +100,9 @@ FreelancerRouter.get('/earnings', async (req, res) => {
       status: PROJECT_STATUS.approved,
     })
 
+    console.log(projects)
+
     const earnings = projects.reduce((total, p) => {
-      console.log(
-        projects,
-        p.accepted_bid.hourly_rate,
-        p.accepted_bid.accepted_at,
-        p.approved_submission.accepted_at
-      )
       return (
         total +
         p.accepted_bid.hourly_rate *

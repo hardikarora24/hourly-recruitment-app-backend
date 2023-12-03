@@ -65,14 +65,12 @@ const logout = (req, res) => {
 
 const returnUser = async (req, res) => {
   const { id } = req.query
-  console.log(id)
   // if (!req.user) {
   //   return res.status(404).json({ success: false, message: 'Not logged in' })
   // }
 
   try {
     const user = await User.findOne({ _id: id })
-    console.log(user)
 
     if (!user) {
       return res.status(404).json({ success: true, message: 'User not found' })
