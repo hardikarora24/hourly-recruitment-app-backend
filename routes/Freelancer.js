@@ -68,7 +68,7 @@ FreelancerRouter.post('/submit', async (req, res) => {
       [
         {
           ...req.body.submission,
-          freelancerId: req.query._id,
+          freelancerId: req.body.id,
           clientId: req.body.clientId,
         },
       ],
