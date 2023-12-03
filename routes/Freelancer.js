@@ -194,16 +194,16 @@ FreelancerRouter.post('/delete-skill', async (req, res) => {
 FreelancerRouter.get('/submission', async (req, res) => {
   const { id, projectId } = req.query
   try {
-    const submission = await Submission.find({
+    const submissions = await Submission.find({
       freelancerId: id,
       projectId,
     })
 
-    if (!submission) {
+    if (!submissions) {
       throw new Error('Could not get projects from DB')
     }
 
-    return res.status(200).json({ success: true, submission })
+    return res.status(200).json({ success: true, submission: submissions[0] })
   } catch (err) {
     console.log(err)
     return res
