@@ -64,14 +64,14 @@ FreelancerRouter.post('/submit', async (req, res) => {
   const session = await connection.startSession()
   try {
     session.startTransaction()
-    await Submission.create(
-      [
-        {
-          ...req.body.submission,
-          freelancerId: req.body.id,
-          clientId: req.body.clientId,
-        },
-      ],
+    await Submission.findOneAndUpdate(
+      { projectId: req.body.projectId, freelancerId: req.body.id },
+      {
+        ...req.body.submission,
+        freelancerId: req.body.id,
+        clientId: req.body.clientId,
+        created_at: Date.now(),
+      },
       {
         session,
       }

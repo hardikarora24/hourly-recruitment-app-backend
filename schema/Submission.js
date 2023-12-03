@@ -24,6 +24,7 @@ const SubmissionSchema = new mongoose.Schema({
     required: true,
     default: SUBMISSION_STATUS.submitted,
   },
+  created_at: { required: true, type: Date },
 })
 
 const Submission = mongoose.model('Submission', SubmissionSchema)
