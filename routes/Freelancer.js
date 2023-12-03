@@ -93,7 +93,7 @@ FreelancerRouter.post('/submit', async (req, res) => {
 
 FreelancerRouter.get('/earnings', async (req, res) => {
   try {
-    const id = req.query._id
+    const id = req.query.id
 
     const projects = await Project.find({
       freelancerId: id,
