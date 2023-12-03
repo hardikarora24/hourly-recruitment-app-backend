@@ -72,9 +72,7 @@ FreelancerRouter.post('/submit', async (req, res) => {
         clientId: req.body.clientId,
         created_at: Date.now(),
       },
-      {
-        session,
-      }
+      { upsert: true, new: true, session }
     )
     await Project.findOneAndUpdate(
       { _id: req.body.submission.projectId },
