@@ -11,7 +11,7 @@ const FreelancerRouter = express.Router()
 FreelancerRouter.get('/projects', async (req, res) => {
   try {
     const projects = await Project.find({
-      $or: [{ freelancerId: req.query._id }, { status: PROJECT_STATUS.posted }],
+      $or: [{ freelancerId: req.query.id }, { status: PROJECT_STATUS.posted }],
     })
 
     if (!projects) {
